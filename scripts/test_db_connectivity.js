@@ -23,10 +23,15 @@ delete dbCfg.create_schema;
 
 db.open(dbCfg, function (err, r) {
   function end() { process.exit(err ? 1 : 0); }
+  function showErrorMessage(err_object) {
+      console.log("\nMySQL connection error!");
+      console.log('Reason:"' + err_object.message + '"');
+  }
   if (err && err.message === "Unknown database 'browserid'") {
     err = undefined;
     end();
   } else {
+    showErrorMessage(err);
     if (!err) db.close(end);
     else end();
   }
